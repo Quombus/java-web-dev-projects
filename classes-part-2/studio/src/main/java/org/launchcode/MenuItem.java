@@ -48,12 +48,13 @@ public class MenuItem {
         isNew = aNew;
     }
 
-    public String printSingleItem(String menuItem) {
+    public String printSingleItem(MenuItem menuItem) {
         String result = description + " " + category + " for " + price;
         if (isNew) {
             result += " Hot New Feature";
         }
         return result;
     }
+
 }
 

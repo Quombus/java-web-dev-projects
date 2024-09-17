@@ -1,5 +1,7 @@
 package org.launchcode;
 
+import java.util.Objects;
+
 public class Student {
 
     private static int nextStudentId = 1;
@@ -13,6 +15,19 @@ public class Student {
         this.studentId = studentId;
         this.numberOfCredits = numberOfCredits;
         this.gpa = gpa;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return studentId == student.studentId && Objects.equals(name, student.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, studentId);
     }
 
     public Student(String name, int studentId) {
@@ -30,13 +45,44 @@ public class Student {
 
 
     //TODO: Uncomment and complete the getGradeLevel method here:
-//    public String getGradeLevel() {
-//        // Determine the grade level of the student based on numberOfCredits
-//    }
+    public String getGradeLevel(Student student) {
+        // Determine the grade level of the student based on numberOfCredits
+        //Freshman (0-29 credits), Sophomore (30-59 credits), Junior (60-89 credits), or Senior (90+ credits).
+        String studentLevel = "";
+        if (student.getNumberOfCredits() >= 0 && student.getNumberOfCredits() <= 29) {
+                studentLevel = "Freshman";
+        }
+        if (student.getNumberOfCredits() >= 30 && student.getNumberOfCredits() <= 59) {
+            studentLevel = "Sophomore";
+        }
+        if (student.getNumberOfCredits() >= 60 && student.getNumberOfCredits() <= 89) {
+            studentLevel = "Junior";
+        }
+        if (student.getNumberOfCredits() >= 90) {
+            studentLevel = "Senior";
+        }
+
+        return studentLevel;
+    }
 
     // TODO: Complete the addGrade method.
     public void addGrade(int courseCredits, double grade) {
         // Update the appropriate fields: numberOfCredits, gpa
+        //This method accepts two parameters—a number of course credits and a numerical grade (0.0-4.0).
+        // With this data, you need to update the student’s GPA.
+      double gpa = 0.0;
+      int totalQualityScore = 0;
+      int qualityScore = 0;
+      int updatedCourseCreditCount = 0;
+      
+      updatedCourseCreditCount = courseCredits + this.getNumberOfCredits();
+      this.setNumberOfCredits(updatedCourseCreditCount);
+      qualityScore = (int)grade * courseCredits;
+      totalQualityScore = ((int)getGpa() * getNumberOfCredits()) + qualityScore;
+      this.gpa = (double) totalQualityScore /getNumberOfCredits();
+
+
+
     }
 
     // TODO: Add your custom 'toString' method here. Make sure it returns a well-formatted String rather
