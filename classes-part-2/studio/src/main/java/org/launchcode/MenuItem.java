@@ -13,6 +13,25 @@ public class MenuItem {
         this.isNew = iN;
     }
 
+    public MenuItem(){
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -27,6 +46,14 @@ public class MenuItem {
 
     public void setNew(boolean aNew) {
         isNew = aNew;
+    }
+
+    public String printSingleItem(String menuItem) {
+        String result = description + " " + category + " for " + price;
+        if (isNew) {
+            result += " Hot New Feature";
+        }
+        return result;
     }
 }
 
