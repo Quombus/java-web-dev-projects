@@ -1,5 +1,6 @@
 package org.launchcode;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -62,6 +63,56 @@ public class Menu {
         }
         return items;
     }
+
+    public void readMenuFromFile(ArrayList<MenuItem> menuItems) {
+        try{
+            BufferedReader br = new BufferedReader(new FileReader("C:/Users/becke/Documents/menu-item-list.txt/"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                MenuItem item = new MenuItem();
+                String newItemString = "";
+
+                item.setDescription(line);
+                item.setCategory(br.readLine());
+                item.setPrice(Double.parseDouble(br.readLine()));
+                newItemString = br.readLine();
+                if ("true".equals(newItemString)) {
+                    item.setNew(true);
+                } else {
+                    item.setNew(false);
+                }
+                menuItems.add(item);
+            }
+            System.out.println("menu loaded successfully");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveMenuItemsToFile(ArrayList<MenuItem> menuItems){
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter("C:/Users/becke/Documents/menu-item-list.txt/"));
+            for (MenuItem menuItem : menuItems) {
+                bw.write(menuItem.getDescription());
+                bw.newLine();
+                bw.write(menuItem.getCategory());
+                bw.newLine();
+                bw.write(Double.toString(menuItem.getPrice()));
+                bw.newLine();
+                if (menuItem.isNew()) {
+                    bw.write("true");
+                } else {
+                    bw.write("false");
+                }
+                bw.newLine();
+            }
+            bw.close();
+            System.out.println("menu saved successfully");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
 
